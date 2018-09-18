@@ -14,8 +14,15 @@ func New(size int) Sem {
 type Sem interface {
 	// Lock will block until the semaphore has a free resource.
 	Lock()
+
 	// Unlock releases a resource.
 	Unlock()
+
+	// Wait waits for n available resources.
+	Wait(n int)
+
+	// Signal releases a resource.
+	Signal()
 }
 
 
@@ -38,4 +45,14 @@ func (s *sem) Lock() {
 
 func (s *sem) Unlock() {
 	s.v(1)
+}
+
+
+func (s *sem) Signal() {
+	s.v(1)
+}
+
+
+func (s *sem) Wait(n int) {
+	s.p(n)
 }
